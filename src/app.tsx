@@ -39,5 +39,11 @@ export function createApp(config: RigConfig = loadConfig()) {
     );
   });
 
+  app.get('/api/digest/:night', (c) => {
+    const night = c.req.param('night');
+    const found = readNight(config.runsDir, night);
+    return found ? c.json(found) : c.json({ error: 'no run log', night }, 404);
+  });
+
   return app;
 }
